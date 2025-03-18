@@ -13,6 +13,6 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(passport.initialize());
 
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 
 export { app };

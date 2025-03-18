@@ -1,4 +1,3 @@
-// user-mongoose.repository.ts
 import { type UserRepository } from "../../application/interfaces/user-repository.interface";
 import { UserModel } from "../schemas/user.schema";
 import { User } from "../../domain/entities/user.entity";

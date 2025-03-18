@@ -1,4 +1,3 @@
-// user.controller.ts
 import type { Request, Response } from "express";
 
 import { SignUpUserUseCase } from "../../application/use-cases/sign-up-user.usecase";
