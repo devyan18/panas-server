@@ -2,6 +2,7 @@ import { type UserRepository } from "../interfaces/user-repository.interface";
 import { SignUpUserDto } from "../dto/sign-up-user.dto";
 import { User } from "../../domain/entities/user.entity";
 import { genSalt, hash } from "bcrypt";
+import { AccessToken } from "../../../../shared/tools/jwt";
 
 type AuthResponse = {
   user: User;
@@ -30,9 +31,11 @@ export class SignUpUserUseCase {
 
     const createdUser = await this.userRepository.create(user);
 
+    const accessToken = await AccessToken.create({ userId: user.id });
+
     return {
       user: createdUser,
-      accessToken: "",
+      accessToken,
     };
   }
 }

@@ -2,6 +2,7 @@ import { type UserRepository } from "../interfaces/user-repository.interface";
 import { SignInUserDto } from "../dto/sign-in-user.dto";
 import { User } from "../../domain/entities/user.entity";
 import { compare } from "bcrypt";
+import { AccessToken } from "../../../../shared/tools/jwt";
 
 type AuthResponse = {
   user: User;
@@ -20,6 +21,8 @@ export class SignInUserUseCase {
 
     if (!isValidPassword) throw new Error("Invalid Credentials");
 
+    const accessToken = await AccessToken.create({ userId: userFound.id });
+
     return {
       user: new User(
         userFound.id,
@@ -28,7 +31,7 @@ export class SignInUserUseCase {
         userFound.email,
         userFound.password,
       ),
-      accessToken: "",
+      accessToken,
     };
   }
 }
