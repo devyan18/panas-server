@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import passport from "passport";
-import { userRouter } from "../../modules/user/infrastructure/routes/user-api";
+import { userRouter } from "../user/infrastructure/http/user.routes";
 
 const app: Application = express();
 
