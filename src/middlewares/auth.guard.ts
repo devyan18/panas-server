@@ -6,7 +6,7 @@ export async function authGuard(
   res: Response,
   next: NextFunction,
 ) {
-  const token = req.headers["AccessToken"] || req.cookies["AccessToken"];
+  const token = req.headers["access-token"] || req.cookies["access-token"];
 
   if (!token) {
     res.status(401).json({

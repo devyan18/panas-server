@@ -6,5 +6,5 @@ export interface ProductRepository {
 
   create(product: Product): Promise<Product>;
   update(product: Product): Promise<Product>;
-  delete(productId: string): Promise<void>;
+  delete(productId: string): Promise<boolean>;
 }

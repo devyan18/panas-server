@@ -2,7 +2,7 @@ import { type ProductRepository } from "../interfaces/product-repository.interfa
 import { CreateProductDto } from "../dto/create-product.dto";
 import { Product } from "../../domain/entities/product.entity";
 
-export class CreateProducUseCase {
+export class CreateProductUseCase {
   constructor(private readonly productRepository: ProductRepository) {}
 
   async execute(createProductDto: CreateProductDto): Promise<Product> {

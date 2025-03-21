@@ -1,11 +1,7 @@
 import { Schema, model, Document } from "mongoose";
+import type { User } from "../../domain/entities/user.entity";
 
-export interface IUser extends Document {
-  name: string;
-  nickname: string;
-  email: string;
-  password: string;
-}
+export interface IUser extends Omit<User, "id">, Document {}
 
 const UserSchema = new Schema<IUser>(
   {

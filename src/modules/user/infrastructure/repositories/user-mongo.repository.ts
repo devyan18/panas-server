@@ -1,8 +1,18 @@
 import { type UserRepository } from "../../application/interfaces/user-repository.interface";
-import { UserModel } from "../schemas/user.schema";
+import { UserModel, type IUser } from "../schemas/user.schema";
 import { User } from "../../domain/entities/user.entity";
 
 export class UserMongoRepository implements UserRepository {
+  private adapter(user: IUser): User {
+    return new User(
+      user.id,
+      user.name,
+      user.nickname,
+      user.email,
+      user.password,
+    );
+  }
+
   async create(user: User): Promise<User> {
     const created = await UserModel.create({
       name: user.name,
@@ -11,13 +21,7 @@ export class UserMongoRepository implements UserRepository {
       password: user.password,
     });
 
-    return new User(
-      created.id,
-      created.name,
-      created.nickname,
-      created.email,
-      created.password,
-    );
+    return this.adapter(created);
   }
 
   async findById(id: string): Promise<User | null> {
@@ -25,13 +29,7 @@ export class UserMongoRepository implements UserRepository {
 
     if (!found) return null;
 
-    return new User(
-      found.id,
-      found.name,
-      found.nickname,
-      found.email,
-      found.password,
-    );
+    return this.adapter(found);
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -39,12 +37,6 @@ export class UserMongoRepository implements UserRepository {
 
     if (!found) return null;
 
-    return new User(
-      found.id,
-      found.name,
-      found.nickname,
-      found.email,
-      found.password,
-    );
+    return this.adapter(found);
   }
 }

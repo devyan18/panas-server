@@ -2,7 +2,7 @@ import { type ProductRepository } from "../interfaces/product-repository.interfa
 import { UpdateProductDto } from "../dto/update-product.dto";
 import { Product } from "../../domain/entities/product.entity";
 
-export class UpdateProducUseCase {
+export class UpdateProductUseCase {
   constructor(private readonly productRepository: ProductRepository) {}
 
   async execute(id: string, dto: UpdateProductDto): Promise<Product> {
