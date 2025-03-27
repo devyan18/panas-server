@@ -9,13 +9,21 @@ import { UpdateProductDto } from "../../application/dto/update-product.dto";
 import { FindByIdProductDto } from "../../application/dto/find-by-id-product.dto";
 
 import { validate } from "class-validator";
+import type { FindAllProductUseCase } from "../../application/use-cases/find-all-product.usecase";
 
 export class ProductController {
   constructor(
+    private readonly findAllProduductUseCase: FindAllProductUseCase,
     private readonly findByIdProductUseCase: FindByIdProductUseCase,
     private readonly createProductUseCase: CreateProductUseCase,
     private readonly updateProductUseCase: UpdateProductUseCase,
   ) {}
+
+  async findAll(_req: Request, res: Response): Promise<void> {
+    const products = await this.findAllProduductUseCase.execute();
+
+    res.status(200).json(products);
+  }
 
   async findById(req: Request, res: Response): Promise<void> {
     const dto = Object.assign(new FindByIdProductDto(), req.params);

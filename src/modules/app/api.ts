@@ -2,6 +2,7 @@ import express, { type Application } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 import { userRouter } from "../user/infrastructure/http/user.routes";
 import { productRouter } from "../product/infrastructure/http/product.routes";
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(cookieParser());
 
 app.use("/user", userRouter);
 app.use("/products", productRouter);
