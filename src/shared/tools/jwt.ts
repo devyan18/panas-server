@@ -19,11 +19,11 @@ export class AccessToken {
     accessToken,
   }: {
     accessToken: string;
-  }): Promise<string> {
+  }): Promise<{ userId: string }> {
     return new Promise((res, rej) => {
       try {
         const response = verify(accessToken, envs.SECRET_KEY);
-        res(response as string);
+        res(response as { userId: string });
       } catch (error) {
         rej(error);
       }

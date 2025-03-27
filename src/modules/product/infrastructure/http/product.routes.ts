@@ -4,7 +4,7 @@ import { ProductMongoRepository } from "../repositories/product-mongo.repository
 import { FindByIdProductUseCase } from "../../application/use-cases/find-by-id-product.usecase";
 import { CreateProductUseCase } from "../../application/use-cases/create-product.usecase";
 import { UpdateProductUseCase } from "../../application/use-cases/update-product.usecase";
-import { authGuard } from "../../../../middlewares/auth.guard";
+import { authGuard } from "../../../user/infrastructure/middlewares/auth.guard";
 import { FindAllProductUseCase } from "../../application/use-cases/find-all-product.usecase";
 
 const productMongoRepository = new ProductMongoRepository();

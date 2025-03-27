@@ -15,28 +15,40 @@ export class UserController {
   ) {}
 
   signUp = async (req: Request, res: Response): Promise<void> => {
-    const dto = Object.assign(new SignUpUserDto(), req.body);
-    const errors = await validate(dto);
+    try {
+      const dto = Object.assign(new SignUpUserDto(), req.body);
+      const errors = await validate(dto);
 
-    if (errors.length) {
-      res.status(400).json(errors);
-      return;
+      if (errors.length) {
+        res.status(400).json(errors);
+        return;
+      }
+
+      const user = await this.signUpUserUseCase.execute(dto);
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(400).json({
+        message: error,
+      });
     }
-
-    const user = await this.signUpUserUseCase.execute(dto);
-    res.status(201).json(user);
   };
 
   signIn = async (req: Request, res: Response): Promise<void> => {
-    const dto = Object.assign(new SignInUserDto(), req.body);
-    const errors = await validate(dto);
+    try {
+      const dto = Object.assign(new SignInUserDto(), req.body);
+      const errors = await validate(dto);
 
-    if (errors.length) {
-      res.status(400).json(errors);
-      return;
+      if (errors.length) {
+        res.status(400).json(errors);
+        return;
+      }
+
+      const data = await this.signInUserUseCase.execute(dto);
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(401).json({
+        message: error,
+      });
     }
-
-    const data = await this.signInUserUseCase.execute(dto);
-    res.status(200).json(data);
   };
 }
