@@ -1,4 +1,4 @@
-import { sign, verify } from "jsonwebtoken";
+import { JsonWebTokenError, sign, verify } from "jsonwebtoken";
 import { envs } from "../../settings/envs";
 
 export class AccessToken {
@@ -9,6 +9,7 @@ export class AccessToken {
         envs.SECRET_KEY,
         (error: Error | null, encoded?: string | undefined) => {
           if (!encoded) return rej(error);
+
           res(encoded);
         },
       );
@@ -22,10 +23,20 @@ export class AccessToken {
   }): Promise<{ userId: string }> {
     return new Promise((res, rej) => {
       try {
-        const response = verify(accessToken, envs.SECRET_KEY);
-        res(response as { userId: string });
+        let response = verify(accessToken, envs.SECRET_KEY) as {
+          userId: string;
+        };
+
+        if (!response?.userId) {
+          rej("Invalid Payload");
+          return;
+        }
+
+        res(response);
       } catch (error) {
-        rej(error);
+        const catchetError = error as JsonWebTokenError;
+
+        rej(catchetError.message);
       }
     });
   }

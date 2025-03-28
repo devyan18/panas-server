@@ -19,16 +19,20 @@ export async function authGuard(
     return;
   }
 
-  const isValidToken = await AccessToken.validate({ accessToken: token });
+  let payload = null;
 
-  if (!isValidToken) {
+  try {
+    payload = await AccessToken.validate({ accessToken: token });
+  } catch (error) {
     res.status(401).json({
       message: "Invalid Credentials",
     });
+
+    console.log(error);
     return;
   }
 
-  const { userId } = isValidToken;
+  const { userId } = payload;
 
   const user = await userMongoRepository.findById(userId);
 
