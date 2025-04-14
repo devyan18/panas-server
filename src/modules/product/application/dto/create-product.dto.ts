@@ -1,4 +1,5 @@
 import {
+  IsMongoId,
   IsNotEmpty,
   IsNumber,
   IsString,
@@ -24,4 +25,9 @@ export class CreateProductDto {
   @IsString()
   @MinLength(10)
   whereItBought!: string;
+}
+
+export class ProductDto extends CreateProductDto {
+  @IsMongoId()
+  id!: string;
 }

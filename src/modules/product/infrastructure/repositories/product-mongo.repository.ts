@@ -44,6 +44,22 @@ export class ProductMongoRepository implements ProductRepository {
     return this.adapter(createdProduct);
   }
 
+  async createMany(products: Product[]): Promise<Product[]> {
+    const createdProducts = await ProductModel.insertMany(
+      products.map(product => ({
+        name: product.name,
+        price: product.price,
+        stock: product.stock,
+        idealStock: product.idealStock,
+        whereItBought: product.whereItBought,
+      })),
+    );
+
+    if (!createdProducts) throw new Error("Problems");
+
+    return createdProducts.map(product => this.adapter(product));
+  }
+
   async update(product: Product): Promise<Product> {
     throw new Error("Method not implemented.");
   }
